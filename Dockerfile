@@ -2,10 +2,9 @@ FROM debian:buster-slim AS builder
 
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get -qq update \
-    apt-get install -qq -y --no-install-recommends \
+    && apt-get install -qq -y --no-install-recommends \
     curl \
     ca-certificates \
-    && apt-get -qq clean \
     && rm -rf /var/lib/apt/lists/* \
     && c_rehash
 
