@@ -14,6 +14,23 @@ RUN mkdir -p /var/www/html/ \
     | tar -xzC /var/www/html/ --strip-components=1
 
 
-FROM php:7.4-apache
+FROM php:7-apache
 
-COPY --chown=nobody --from=builder /var/www/html/ .
+ENV USER reddittoprss
+ENV UID 82742
+ENV GID 82742
+
+ENV APACHE_RUN_USER "${USER}"
+ENV RUN_APACHE_GROUP "${USER}"
+
+WORKDIR /var/www/html/
+
+RUN groupadd -r "${USER}" --gid="${GID}" \
+    && useradd --no-log-init -r -g "${GID}" --uid="${UID}" "${USER}" \
+    && sed -s -i -e "s/80/8080/" /etc/apache2/ports.conf /etc/apache2/sites-available/*.conf
+
+COPY --chown="${USER}" --from=builder /var/www/html/ .
+
+USER "${UID}"
+
+EXPOSE 8080
