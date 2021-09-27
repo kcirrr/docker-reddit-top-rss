@@ -14,11 +14,11 @@ RUN mkdir -p /var/www/html/ \
     | tar -xzC /var/www/html/ --strip-components=1
 
 
-FROM php:7-apache
+FROM php:7.3.31-apache
 
 ENV USER reddittoprss
-ENV UID 82742
-ENV GID 82742
+ENV UID 1000
+ENV GID 1000
 
 ENV APACHE_RUN_USER "${USER}"
 ENV RUN_APACHE_GROUP "${USER}"
