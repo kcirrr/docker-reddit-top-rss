@@ -29,7 +29,8 @@ RUN apt-get update \
     && apt-get upgrade -y \
     && groupadd -r "${USER}" --gid="${GID}" \
     && useradd --no-log-init -r -g "${GID}" --uid="${UID}" "${USER}" \
-    && sed -s -i -e "s/80/8080/" /etc/apache2/ports.conf /etc/apache2/sites-available/*.conf
+    && sed -s -i -e "s/80/8080/" /etc/apache2/ports.conf /etc/apache2/sites-available/*.conf \
+    && rm -rf /var/lib/apt/lists/*
 
 COPY --chown="${USER}" --from=builder /var/www/html/ .
 
