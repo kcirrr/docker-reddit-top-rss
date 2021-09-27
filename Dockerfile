@@ -25,7 +25,9 @@ ENV RUN_APACHE_GROUP "${USER}"
 
 WORKDIR /var/www/html/
 
-RUN groupadd -r "${USER}" --gid="${GID}" \
+RUN apt-get update \
+    && apt-get upgrade -y \
+    && groupadd -r "${USER}" --gid="${GID}" \
     && useradd --no-log-init -r -g "${GID}" --uid="${UID}" "${USER}" \
     && sed -s -i -e "s/80/8080/" /etc/apache2/ports.conf /etc/apache2/sites-available/*.conf
 
