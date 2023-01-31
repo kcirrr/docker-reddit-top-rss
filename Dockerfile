@@ -1,4 +1,4 @@
-FROM ubuntu:22.04 AS builder
+FROM ubuntu:23.04 AS builder
 
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get -qq update \
